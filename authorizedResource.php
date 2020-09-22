@@ -12,9 +12,9 @@
 
   if ($storage->getHasExpired()) {
     $provider = new \League\OAuth2\Client\Provider\GenericProvider([
-      'clientId'                => '__YOUR_CLIENT_ID__',
-      'clientSecret'            => '__YOUR_CLIENT_SECRET__',
-      'redirectUri'             => 'http://localhost:8888/xero-php-oauth2-starter/callback.php',
+      'clientId'                => 'F979F126B29D4FF9A8CC41FFB86954EA',
+      'clientSecret'            => 'KZBq8LSh7mK3IzhhbP_KCVQ7g_NcED78tWaN1a6pN2PRTbcp',
+      'redirectUri'             => 'http://localhost:8888/adam-xero-challenge/callback.php',
       'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
       'urlAccessToken'          => 'https://identity.xero.com/connect/token',
       'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
