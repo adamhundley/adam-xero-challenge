@@ -59,10 +59,10 @@ if (isset($_GET['action']) && $_GET["action"] === 'run_task') {
 
     $task->createItems($item_data);
     $task->createContact();
-    // $task->getAccount();
+    $task->getAccount();
     $task->createLineItems();
     $task->createInvoice();
-    // $task->createPayment();
+    $task->createPayment();
 }
 ?>
 <html>

@@ -1,10 +1,13 @@
 <?php
 require_once('item.php');
+
+use XeroAPI\XeroPHP\AccountingObjectSerializer;
 use XeroAPI\XeroPHP\Models\Accounting\Contact;
 use XeroAPI\XeroPHP\Models\Accounting\Invoice;
 use XeroAPI\XeroPHP\Models\Accounting\Invoices;
 use XeroAPI\XeroPHP\Models\Accounting\Items;
 use XeroAPI\XeroPHP\Models\Accounting\LineItem;
+use XeroAPI\XeroPHP\Models\Accounting\Payment;
 use XeroAPI\XeroPHP\Models\Accounting\TaxType;
 
 class TaskDispatch
@@ -70,7 +73,7 @@ class TaskDispatch
             $name = $item->getName();
             $this->line_items[] = (new LineItem())
                 ->setItemCode($item->getCode())
-                ->setAccountCode('400')
+                ->setAccountCode($this->account->getCode())
                 ->setQuantity($this->item_data[$name]['quantity'])
                 ->setDescription("4 {$name}")
                 ->setTaxType(TaxType::NONE)
@@ -84,6 +87,7 @@ class TaskDispatch
             ->setContact($this->contact)
             ->setType(Invoice::TYPE_ACCREC)
             ->setStatus(Invoice::STATUS_AUTHORISED)
+            ->setReference('Xero-Adam')
             ->setDueDate(new DateTime())
             ->setLineItems($this->line_items);
         $invoices = (new Invoices())
@@ -104,9 +108,29 @@ class TaskDispatch
         }
     }
 
+    public function createPayment()
+    {
+        $payment = (new Payment())
+            ->setInvoice($this->invoice)
+            ->setAccount($this->account)
+            ->setAmount($this->invoice->getTotal());
+        try {
+            $this->api_instance->createPayment($this->xero_tenant_id, $payment);
+        } catch (\XeroAPI\XeroPHP\ApiException $e) {
+            $error = AccountingObjectSerializer::deserialize(
+                $e->getResponseBody(),
+                '\XeroAPI\XeroPHP\Models\Accounting\Error',
+                []
+            );
+            print_r($error);
+        }
+    }
+
+    public function getAccount()
     {
         try {
-            $this->account = $this->api_instance->getAccounts($this->xero_tenant_id)[0];
+            $accounts = $this->api_instance->getAccount($this->xero_tenant_id, '400');
+            $this->account = $accounts->getAccounts()[0] ?? null;
         } catch (\XeroAPI\XeroPHP\ApiException $e) {
             $error = AccountingObjectSerializer::deserialize(
                 $e->getResponseBody(),
