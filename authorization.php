@@ -1,6 +1,8 @@
 <?php
   ini_set('display_errors', 'On');
   require __DIR__ . '/vendor/autoload.php';
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+  $dotenv->load();
   require_once('storage.php');
 
   // Storage Class uses sessions for storing access token (demo only)
@@ -10,9 +12,9 @@
   //session_start();
 
   $provider = new \League\OAuth2\Client\Provider\GenericProvider([
-    'clientId'                => 'F979F126B29D4FF9A8CC41FFB86954EA',
-    'clientSecret'            => 'KZBq8LSh7mK3IzhhbP_KCVQ7g_NcED78tWaN1a6pN2PRTbcp',
-    'redirectUri'             => 'http://localhost:8888/adam-xero-challenge/callback.php',
+    'clientId'                => $_ENV['CLIENT_ID'],
+    'clientSecret'            => $_ENV['CLIENT_SECRET'],
+    'redirectUri '            => $_ENV['REDIRECT_URI'],
     'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
     'urlAccessToken'          => 'https://identity.xero.com/connect/token',
     'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
