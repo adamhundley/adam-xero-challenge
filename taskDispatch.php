@@ -12,6 +12,7 @@ class TaskDispatch
 
     public function createItems(array $item_data)
     {
+        $this->item_data = $item_data;
         $items = [];
         foreach ($item_data as $item) {
             $item_object = new Item(
@@ -24,7 +25,7 @@ class TaskDispatch
         $this->items_object = (new Items())->setItems($items);
 
         try {
-            $this->api_instance->createItems($this->xero_tenant_id, $this->items_object);
+            $this->api_instance->createItems($this->xero_tenant_id, $this->items_object, true);
         } catch (\XeroAPI\XeroPHP\ApiException $e) {
             $error = AccountingObjectSerializer::deserialize(
                 $e->getResponseBody(),

@@ -45,13 +45,15 @@ if (isset($_GET['action']) && $_GET["action"] === 'run_task') {
     $task = new TaskDispatch($storage->getXeroTenantId(), $apiInstance);
 
     $item_data = [
-        [
+        'Surfboard' => [
             'name' => 'Surfboard',
-            'price' => 164.99,
+            'price' => 520.99,
+            'quantity' => 4,
         ],
-        [
+        'Skateboard' => [
             'name' => 'Skateboard',
-            'price' => 75.99,
+            'price' => 124.30,
+            'quantity' => 5,
         ],
     ];
 
