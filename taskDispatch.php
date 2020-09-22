@@ -1,5 +1,6 @@
 <?php
 require_once('item.php');
+use XeroAPI\XeroPHP\Models\Accounting\Contact;
 use XeroAPI\XeroPHP\Models\Accounting\Items;
 class TaskDispatch
 {
@@ -33,4 +34,27 @@ class TaskDispatch
             print_r($error);
         }
     }
+
+    public function createContact()
+    {
+        $this->contact = (new Contact())
+            ->setName('Rod Drury')
+            ->setFirstName("Rod")
+            ->setLastName("Drury");
+
+        try {
+            $this->api_instance->createContacts(
+                $this->xero_tenant_id,
+                ['contacts' => [$this->contact]]
+            );
+        } catch (\XeroAPI\XeroPHP\ApiException $e) {
+            $error = AccountingObjectSerializer::deserialize(
+                $e->getResponseBody(),
+                '\XeroAPI\XeroPHP\Models\Accounting\Error',
+                []
+            );
+            print_r($error);
+        }
+    }
+
 }
