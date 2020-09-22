@@ -1,4 +1,4 @@
-# xero-php-oauth2-starter
+# Adam Hundley Xero Code Challenge
 
 This is a starter app with the code to perform OAuth 2.0 authentication
 
@@ -31,24 +31,11 @@ To obtain your API keys, follow these steps and create a Xero app
 * Click the "Save" button. You secret is now hidden.
 
 ## Configure API keys
-You'll need to update your code where ever there is a clientId, clientSecret or redirectUri
-
-- authoirzation.php
-- callback.php
-- authorizedResource.php
-
-Sample PHP code from authorization.php
-```php
-
-$provider = new \League\OAuth2\Client\Provider\GenericProvider([
-	'clientId'                => '__YOUR_CLIENT_ID__',,   
-	'clientSecret'            => "__YOUR_CLIENT_SECRET__",
-	'redirectUri'             => "__YOUR_REDIRECT_URI__",
-	'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-	'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-	'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
-]);
-
+Create a `.env` file and add
+```
+CLIENT_ID="..."
+CLIENT_SECRET="..."
+REDIRECT_URI="http://localhost:8888/path/callback.php"
 ```
 ## Take it for a spin
 Launch your browser and navigate to http://localhost:8888/xero-php-oauth2-starter/ (or whatever the correct path is). 
@@ -56,7 +43,7 @@ Launch your browser and navigate to http://localhost:8888/xero-php-oauth2-starte
 - You should see a connect to xero link.
 - Click the link, login to Xero (if you aren't already)
 - Grant access to your user account and select the Demo company to connect to.
-- Done - try out the different API calls
+- Done - Click run task. Items, Contacts and Invoice will be created and paid!
 
 ## License
 
