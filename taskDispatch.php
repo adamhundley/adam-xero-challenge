@@ -57,4 +57,16 @@ class TaskDispatch
         }
     }
 
+    {
+        try {
+            $this->account = $this->api_instance->getAccounts($this->xero_tenant_id)[0];
+        } catch (\XeroAPI\XeroPHP\ApiException $e) {
+            $error = AccountingObjectSerializer::deserialize(
+                $e->getResponseBody(),
+                '\XeroAPI\XeroPHP\Models\Accounting\Error',
+                []
+            );
+            print_r($error);
+        }
+    }
 }
